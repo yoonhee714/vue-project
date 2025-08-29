@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <h3>{{ msg }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>상품명</th>
+          <th>카테고리</th>
+          <th>가격</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-bind:key="i" v-for="(prod, i) in products">
+          <td>{{ prod.products_name }}</td>
+          <td v-text="prod.category"></td>
+          <td>{{ prod.price }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+export default {
+  products() {
+    return {
+      msg: "가전",
+      data: [
+        { name: "홍길동", age: 20 },
+        { name: "김민수", age: 25 },
+        { name: "최익수", age: 23 },
+      ],
+      prodList: [],
+    };
+  },
+  beforeCreate() {
+    console.log("beforeCreate");
+  },
+  created() {
+    console.log("created");
+  },
+  beforeMount() {
+    console.log("beforeMount");
+  },
+  beforeUpdate() {
+    console.log("beforeUpdate");
+  },
+  updated() {
+    console.log("updated");
+  },
+  mounted() {
+    //DataBindingList 컴포넌트가 생성되면 생성, 마운트, 소멸..
+    fetch("http://192.168.0.8:3000/products")
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        //this.prodList = result; //데이터 변경
+      });
+  },
+};
+</script>
+<style scoped></style>
